@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webcam Detection Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2em;
+      }
+      #result {
+        font-weight: bold;
+        margin-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Webcam Detection Test</h1>
+    <button id="checkWebcamBtn">Check for Webcam</button>
+    <div id="result"></div>
+
+    <script>
+      function hasWebcam() {
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices.enumerateDevices
+        ) {
+          return Promise.resolve(false); // API not supported
+        }
+        return navigator.mediaDevices
+          .enumerateDevices()
+          .then(function (devices) {
+            return devices.some(function (device) {
+              return device.kind === "videoinput";
+            });
+          })
+          .catch(function () {
+            return false; // Error accessing devices
+          });
+      }
+
+      document
+        .getElementById("checkWebcamBtn")
+        .addEventListener("click", function () {
+          var resultDiv = document.getElementById("result");
+          resultDiv.textContent = "Checking...";
+          hasWebcam().then(function (hasCam) {
+            if (hasCam) {
+              resultDiv.textContent = "Webcam detected!";
+            } else {
+              resultDiv.textContent = "No webcam detected.";
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
