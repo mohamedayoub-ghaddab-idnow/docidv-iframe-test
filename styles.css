@@ -1,0 +1,314 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* ── App shell ─────────────────────────────────────────── */
+.app {
+  display: flex;
+  height: 100vh;
+  background: #111c24;
+}
+
+/* ── Sidebar ────────────────────────────────────────────── */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: #18242e;
+  color: #cdd5db;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 1px solid #243040;
+}
+
+.sidebar-logo {
+  padding: 14px 18px;
+  border-bottom: 1px solid #243040;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ecf0f1;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.logo-mark .dot {
+  color: #e74c3c;
+}
+
+.sidebar-logo h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #a8b5bf;
+  line-height: 1.4;
+}
+
+/* ── Collapsible sections ───────────────────────────────── */
+.section {
+  border-bottom: 1px solid #1e2d38;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #8fa3b0;
+  transition: background 0.15s;
+}
+
+.section-header:hover {
+  background: #1e2d38;
+}
+
+.chevron {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #8fa3b0;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.section-header.collapsed .chevron {
+  transform: rotate(-90deg);
+}
+
+.section-body {
+  padding: 10px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.section-body.hidden {
+  display: none;
+}
+
+/* ── Form controls ──────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label,
+.field-label {
+  font-size: 11px;
+  color: #7f8c8d;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="url"] {
+  width: 100%;
+  padding: 7px 10px;
+  background: #0d1820;
+  border: 1px solid #2c3e50;
+  border-radius: 4px;
+  color: #dce6ec;
+  font-size: 13px;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.4;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  width: 100%;
+}
+
+.btn-primary {
+  background: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #3d5166;
+}
+
+.btn-primary:hover {
+  background: #3d5166;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}
+
+/* ── Sandbox controls ───────────────────────────────────── */
+.sandbox-doc-link {
+  font-size: 11px;
+  color: #3498db;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.sandbox-doc-link:hover {
+  text-decoration: underline;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 1px 0;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  accent-color: #3498db;
+  flex-shrink: 0;
+}
+
+.checkbox-row span {
+  font-size: 12px;
+  color: #a8b5bf;
+}
+
+.sandbox-attr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 4px;
+}
+
+.sandbox-attr-list.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.group-label {
+  font-size: 11px;
+  color: #55717e;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+
+/* ── Main / iframe area ─────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.iframe-wrapper {
+  flex: 1;
+  overflow: auto;
+  background: #1c2830;
+  display: flex;
+  padding: 24px;
+}
+
+.iframe-inner {
+  margin: auto;
+  flex-shrink: 0;
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── Loading / placeholder ──────────────────────────────── */
+.loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #55717e;
+  font-size: 13px;
+  text-align: center;
+  padding: 20px;
+  background: #1c2830;
+  pointer-events: none;
+}
+
+.loading.hidden {
+  display: none;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.08);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 0.9s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+    max-height: 45vh;
+    border-right: none;
+    border-bottom: 1px solid #243040;
+  }
+
+  .main {
+    flex: 1;
+    min-height: 0;
+  }
+}

@@ -1,245 +1,204 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Docidv Facetec iframe Tester - SPX-1104</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        padding: 20px;
-      }
-
-      .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-
-      .main-content {
-        display: flex;
-      }
-
-      .side-panel {
-        width: 300px;
-        background-color: #34495e;
-        padding: 20px;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .side-panel h2 {
-        font-size: 18px;
-        margin-bottom: 10px;
-        color: #ecf0f1;
-      }
-
-      .side-panel label {
-        font-size: 14px;
-        margin-bottom: 5px;
-        display: block;
-        color: #bdc3c7;
-      }
-
-      .side-panel input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #7f8c8d;
-        border-radius: 4px;
-        font-size: 14px;
-        background-color: #2c3e50;
-        color: white;
-      }
-
-      .side-panel input:focus {
-        outline: none;
-        border-color: #3498db;
-      }
-
-      .side-panel button {
-        width: 100%;
-        padding: 12px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      .side-panel button:hover {
-        background-color: #2980b9;
-      }
-
-      .side-panel button:active {
-        background-color: #21618c;
-      }
-
-      .content-area {
-        flex: 1;
-      }
-
-      .header {
-        background-color: #2c3e50;
-        color: white;
-        padding: 20px;
-        text-align: center;
-      }
-
-      .header h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-
-      .header p {
-        font-size: 14px;
-        opacity: 0.9;
-      }
-
-      .iframe-container {
-        position: relative;
-        width: 100%;
-        height: 900px;
-      }
-
-      iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        color: #666;
-      }
-
-      .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
+    <title>Iframe Integration Tester</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <h1>Docidv iframe App Test</h1>
-        <p id="currentUrl">
-          Testing: https://go.dev7.idnow.de/docidv?identToken=DV7-RHULQ
-        </p>
-      </div>
-      <div class="main-content">
-        <div class="side-panel">
-          <h2>URL Settings</h2>
-          <div>
-            <label for="urlInput">iframe Source URL:</label>
-            <input
-              type="text"
-              id="urlInput"
-              placeholder="Enter URL..."
-              value="https://go.dev7.idnow.de/docidv?identToken=DV7-RHULQ"
-            />
-          </div>
-          <button id="applyBtn">Apply URL</button>
+    <div class="app">
+
+      <!-- ── Sidebar ── -->
+      <div class="sidebar">
+
+        <div class="sidebar-logo">
+          <div class="logo-mark">iD<span class="dot">now</span><span class="dot">.</span></div>
+          <h2>Iframe integration tester</h2>
         </div>
-        <div class="content-area">
-          <div class="iframe-container">
+
+        <!-- URL Settings -->
+        <div class="section">
+          <div class="section-header">
+            <span class="chevron"></span>
+            URL Settings
+          </div>
+          <div class="section-body">
+            <div class="field">
+              <label for="urlInput">Iframe Source URL:</label>
+              <input
+                type="url"
+                id="urlInput"
+                placeholder="https://…"
+                value="https://go.dev8.idnow.de/docidv/channel-chooser/web?identToken=DV8-CQGVP"
+              />
+            </div>
+            <button class="btn btn-primary" id="applyUrlBtn">Apply URL</button>
+          </div>
+        </div>
+
+        <!-- Dimensions -->
+        <div class="section">
+          <div class="section-header">
+            <span class="chevron"></span>
+            Dimensions
+          </div>
+          <div class="section-body">
+            <div class="field">
+              <label for="heightInput">Height (px)</label>
+              <input type="number" id="heightInput" value="900" min="100" />
+            </div>
+            <div class="field">
+              <label for="widthInput">Width (px)</label>
+              <input type="number" id="widthInput" value="1200" min="100" />
+            </div>
+            <button class="btn btn-primary" id="applyDimBtn">Apply</button>
+          </div>
+        </div>
+
+        <!-- Sandbox Controls -->
+        <div class="section">
+          <div class="section-header">
+            <span class="chevron"></span>
+            Sandbox controls
+          </div>
+          <div class="section-body">
+            <a
+              class="sandbox-doc-link"
+              href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox"
+              target="_blank"
+              rel="noopener"
+            >Sandbox documentation</a>
+
+            <label class="checkbox-row">
+              <input type="checkbox" id="enableSandbox" checked />
+              <span>Enable sandbox attribute</span>
+            </label>
+
+            <p class="group-label">Choose sandbox attribute</p>
+
+            <div class="sandbox-attr-list" id="sandboxAttrList">
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-downloads" />
+                <span>allow downloads</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-forms" checked />
+                <span>allow forms</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-modals" checked />
+                <span>allow modals</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-orientation-lock" />
+                <span>allow orientation lock</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-pointer-lock" />
+                <span>allow pointer lock</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-popups" checked />
+                <span>allow popups</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-popups-to-escape-sandbox" />
+                <span>allow popups to escape sandbox</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-presentation" />
+                <span>allow presentation</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-same-origin" checked />
+                <span>allow same origin</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-scripts" checked />
+                <span>allow scripts</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-top-navigation" />
+                <span>allow top navigation</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="sandbox-cb" value="allow-top-navigation-by-user-activation" />
+                <span>allow top navigation by user activation</span>
+              </label>
+            </div>
+
+            <button class="btn btn-primary" id="applySandboxBtn">Apply</button>
+          </div>
+        </div>
+
+        <!-- Allow attributes -->
+        <div class="section">
+          <div class="section-header">
+            <span class="chevron"></span>
+            Allow attributes
+          </div>
+          <div class="section-body">
+            <p class="group-label">Feature permissions</p>
+            <div id="allowAttrList">
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="camera" checked />
+                <span>camera</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="microphone" checked />
+                <span>microphone</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="geolocation" checked />
+                <span>geolocation</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="fullscreen" checked />
+                <span>fullscreen</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="clipboard-read" checked />
+                <span>clipboard-read</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="clipboard-write" checked />
+                <span>clipboard-write</span>
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" class="allow-cb" value="web-share" checked />
+                <span>web-share</span>
+              </label>
+            </div>
+            <button class="btn btn-primary" id="applyAllowBtn">Apply</button>
+          </div>
+        </div>
+
+      </div>
+      <!-- /sidebar -->
+
+      <!-- ── Main / iframe area ── -->
+      <div class="main">
+        <div class="iframe-wrapper">
+          <div class="iframe-inner" id="iframeInner">
             <div class="loading" id="loading">
               <div class="spinner"></div>
-              <p>Loading iframe...</p>
+              <p>Loading…</p>
             </div>
             <iframe
               id="testFrame"
-              src="https://go.dev7.idnow.de/docidv?identToken=DV7-RHULQ"
-              title="Localhost App Test"
+              src="https://go.dev8.idnow.de/docidv/channel-chooser/web?identToken=DV8-CQGVP"
+              title="Iframe integration tester"
               allow="camera; microphone; geolocation; fullscreen; clipboard-read; clipboard-write; web-share"
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
-              onload="document.getElementById('loading').style.display='none'"
               allowfullscreen
-            >
-            </iframe>
+            ></iframe>
           </div>
         </div>
       </div>
+
     </div>
 
-    <script>
-      // Handle iframe load errors
-      const iframe = document.getElementById("testFrame");
-      const loading = document.getElementById("loading");
-      const urlInput = document.getElementById("urlInput");
-      const applyBtn = document.getElementById("applyBtn");
-
-      iframe.onerror = function () {
-        loading.innerHTML =
-          '<p style="color: red;">Failed to load iframe. Make sure your localhost:3000 server is running.</p>';
-      };
-
-      // Timeout for loading indicator
-      setTimeout(() => {
-        if (loading.style.display !== "none") {
-          loading.innerHTML =
-            '<p style="color: orange;">Still loading... If this persists, check if localhost:3000 is accessible.</p>';
-        }
-      }, 5000);
-
-      // Apply URL button handler
-      applyBtn.addEventListener("click", function () {
-        const newUrl = urlInput.value.trim();
-        if (newUrl) {
-          // Show loading indicator
-          loading.style.display = "block";
-          loading.innerHTML =
-            '<div class="spinner"></div><p>Loading iframe...</p>';
-
-          // Update iframe src
-          iframe.src = newUrl;
-
-          // Update header text
-          document.getElementById("currentUrl").textContent =
-            "Testing: " + newUrl;
-        } else {
-          alert("Please enter a valid URL");
-        }
-      });
-
-      // Allow pressing Enter in the input field to apply URL
-      urlInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          applyBtn.click();
-        }
-      });
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>
