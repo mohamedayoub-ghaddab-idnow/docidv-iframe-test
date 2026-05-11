@@ -8,17 +8,31 @@
   </head>
   <body>
     <div class="app">
-
-      <!-- ── Sidebar ── -->
-      <div class="sidebar">
-
-        <div class="sidebar-logo">
+      <!-- ── Header ── -->
+      <header class="header">
+        <div class="header-logo">
           <div class="logo-mark">iD<span class="dot">now</span><span class="dot">.</span></div>
-          <h2>Iframe integration tester</h2>
+          <h1>Iframe Integration Tester</h1>
         </div>
+        <div class="header-controls">
+          <button class="toggle-btn" id="toggleSidebarBtn" title="Toggle controls panel">
+            <span class="toggle-icon">◀</span>
+            <span>Controls</span>
+          </button>
+          <button class="toggle-btn" id="togglePostMessageBtn" title="Toggle postMessage panel">
+            <span>postMessage</span>
+            <span class="toggle-icon">▶</span>
+          </button>
+        </div>
+      </header>
 
-        <!-- URL Settings -->
-        <div class="section">
+      <div class="app-body">
+        <!-- ── Sidebar ── -->
+        <div class="sidebar" id="sidebar">
+          <div class="sidebar-sections">
+
+            <!-- URL Settings -->
+            <div class="section">
           <div class="section-header">
             <span class="chevron"></span>
             URL Settings
@@ -68,7 +82,8 @@
               href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox"
               target="_blank"
               rel="noopener"
-            >Sandbox documentation</a>
+              >Sandbox documentation</a
+            >
 
             <label class="checkbox-row">
               <input type="checkbox" id="enableSandbox" checked />
@@ -79,51 +94,104 @@
 
             <div class="sandbox-attr-list" id="sandboxAttrList">
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-downloads" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-downloads"
+                />
                 <span>allow downloads</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-forms" checked />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-forms"
+                  checked
+                />
                 <span>allow forms</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-modals" checked />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-modals"
+                  checked
+                />
                 <span>allow modals</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-orientation-lock" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-orientation-lock"
+                />
                 <span>allow orientation lock</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-pointer-lock" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-pointer-lock"
+                />
                 <span>allow pointer lock</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-popups" checked />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-popups"
+                  checked
+                />
                 <span>allow popups</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-popups-to-escape-sandbox" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-popups-to-escape-sandbox"
+                />
                 <span>allow popups to escape sandbox</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-presentation" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-presentation"
+                />
                 <span>allow presentation</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-same-origin" checked />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-same-origin"
+                  checked
+                />
                 <span>allow same origin</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-scripts" checked />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-scripts"
+                  checked
+                />
                 <span>allow scripts</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-top-navigation" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-top-navigation"
+                />
                 <span>allow top navigation</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="sandbox-cb" value="allow-top-navigation-by-user-activation" />
+                <input
+                  type="checkbox"
+                  class="sandbox-cb"
+                  value="allow-top-navigation-by-user-activation"
+                />
                 <span>allow top navigation by user activation</span>
               </label>
             </div>
@@ -142,40 +210,75 @@
             <p class="group-label">Feature permissions</p>
             <div id="allowAttrList">
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="camera" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="camera"
+                  checked
+                />
                 <span>camera</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="microphone" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="microphone"
+                  checked
+                />
                 <span>microphone</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="geolocation" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="geolocation"
+                  checked
+                />
                 <span>geolocation</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="fullscreen" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="fullscreen"
+                  checked
+                />
                 <span>fullscreen</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="clipboard-read" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="clipboard-read"
+                  checked
+                />
                 <span>clipboard-read</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="clipboard-write" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="clipboard-write"
+                  checked
+                />
                 <span>clipboard-write</span>
               </label>
               <label class="checkbox-row">
-                <input type="checkbox" class="allow-cb" value="web-share" checked />
+                <input
+                  type="checkbox"
+                  class="allow-cb"
+                  value="web-share"
+                  checked
+                />
                 <span>web-share</span>
               </label>
             </div>
             <button class="btn btn-primary" id="applyAllowBtn">Apply</button>
           </div>
         </div>
-
-      </div>
-      <!-- /sidebar -->
+          </div>
+        </div>
+        <!-- /sidebar -->
 
       <!-- ── Main / iframe area ── -->
       <div class="main">
@@ -187,14 +290,40 @@
             </div>
             <iframe
               id="testFrame"
-              src="https://go.dev8.idnow.de/docidv/channel-chooser/web?identToken=DV8-CQGVP"
+              src="https://go.dev7.idnow.de/docidv?identtoken=DV7-LAXDG"
               title="Iframe integration tester"
-              allow="camera; microphone; geolocation; fullscreen; clipboard-read; clipboard-write; web-share"
+              allow="
+                camera;
+                microphone;
+                geolocation;
+                fullscreen;
+                clipboard-read;
+                clipboard-write;
+                web-share;
+              "
               sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
               allowfullscreen
             ></iframe>
           </div>
         </div>
+      </div>
+
+      <!-- ── PostMessage Panel (right) ── -->
+      <div class="postmessage-panel" id="postmessagePanel">
+        <div class="panel-header">
+          <span class="panel-title">postMessage Events</span>
+          <div class="panel-actions">
+            <span class="message-count" id="messageCount">0</span>
+            <button class="btn-icon" id="clearMessagesBtn" title="Clear all">✕</button>
+          </div>
+        </div>
+        <div class="message-list" id="messageList">
+          <div class="empty-state">
+            <p>Listening for postMessage events from the iframe…</p>
+          </div>
+        </div>
+      </div>
+
       </div>
 
     </div>

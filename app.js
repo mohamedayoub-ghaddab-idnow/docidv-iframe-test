@@ -2,6 +2,26 @@ const iframe = document.getElementById('testFrame');
 const loading = document.getElementById('loading');
 const iframeInner = document.getElementById('iframeInner');
 
+// ── Panel toggles ──────────────────────────────────────────
+const sidebar = document.getElementById('sidebar');
+const postmessagePanel = document.getElementById('postmessagePanel');
+const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+const togglePostMessageBtn = document.getElementById('togglePostMessageBtn');
+
+// Set initial active state
+toggleSidebarBtn.classList.add('active');
+togglePostMessageBtn.classList.add('active');
+
+toggleSidebarBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+  toggleSidebarBtn.classList.toggle('active');
+});
+
+togglePostMessageBtn.addEventListener('click', () => {
+  postmessagePanel.classList.toggle('collapsed');
+  togglePostMessageBtn.classList.toggle('active');
+});
+
 // ── Collapsible sections ────────────────────────────────────
 document.querySelectorAll('.section-header').forEach(header => {
   header.addEventListener('click', () => {
@@ -125,3 +145,113 @@ if (iframe.getAttribute('src')) {
 } else {
   showPlaceholder();
 }
+
+// ── PostMessage listener ────────────────────────────────────
+const messageList = document.getElementById('messageList');
+const messageCount = document.getElementById('messageCount');
+const clearMessagesBtn = document.getElementById('clearMessagesBtn');
+let messages = [];
+let expandedIndex = null;
+
+function formatTime(date) {
+  return date.toLocaleTimeString('en-US', {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    fractionalSecondDigits: 3
+  });
+}
+
+function truncate(str, maxLen = 80) {
+  if (typeof str !== 'string') str = JSON.stringify(str);
+  return str.length > maxLen ? str.slice(0, maxLen) + '…' : str;
+}
+
+function getMessagePreview(data) {
+  if (typeof data === 'string') return truncate(data);
+  if (typeof data === 'object' && data !== null) {
+    const str = JSON.stringify(data);
+    return truncate(str);
+  }
+  return String(data);
+}
+
+function renderMessages() {
+  messageCount.textContent = messages.length;
+
+  if (messages.length === 0) {
+    messageList.innerHTML = `
+      <div class="empty-state">
+        <p>Listening for postMessage events from the iframe…</p>
+      </div>
+    `;
+    return;
+  }
+
+  messageList.innerHTML = messages.map((msg, idx) => {
+    const isExpanded = expandedIndex === idx;
+    if (isExpanded) {
+      return `
+        <div class="message-expanded" data-index="${idx}">
+          <div class="message-meta">
+            <span class="message-time">${msg.time}</span>
+            <span class="message-origin" title="${msg.origin}">${msg.origin}</span>
+          </div>
+          <pre>${JSON.stringify(msg.data, null, 2)}</pre>
+        </div>
+      `;
+    }
+    return `
+      <div class="message-item" data-index="${idx}">
+        <div class="message-meta">
+          <span class="message-time">${msg.time}</span>
+          <span class="message-origin" title="${msg.origin}">${msg.origin}</span>
+        </div>
+        <div class="message-preview">${getMessagePreview(msg.data)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addMessage(event) {
+  const iframeSrc = new URL(iframe.src);
+  const eventOrigin = event.origin || '';
+
+  // Only capture messages from the iframe's origin
+  if (iframeSrc.origin !== eventOrigin) return;
+
+  messages.unshift({
+    time: formatTime(new Date()),
+    origin: eventOrigin,
+    data: event.data
+  });
+
+  // Keep max 100 messages
+  if (messages.length > 100) {
+    messages = messages.slice(0, 100);
+  }
+
+  renderMessages();
+}
+
+window.addEventListener('message', addMessage);
+
+messageList.addEventListener('click', (e) => {
+  const item = e.target.closest('[data-index]');
+  if (!item) return;
+
+  const idx = parseInt(item.dataset.index, 10);
+  if (expandedIndex === idx) {
+    expandedIndex = null;
+  } else {
+    expandedIndex = idx;
+  }
+  renderMessages();
+});
+
+clearMessagesBtn.addEventListener('click', () => {
+  messages = [];
+  expandedIndex = null;
+  renderMessages();
+});
